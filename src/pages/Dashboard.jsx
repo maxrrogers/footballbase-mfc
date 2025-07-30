@@ -1,45 +1,41 @@
-import { useEffect, useState } from "react";
-
 function Dashboard() {
-  const [league, setLeague] = useState([]);
-  const [fixtures, setFixtures] = useState([]);
+  const league = [
+    { rank: 1, team: { id: 1, name: "Celtic" }, points: 45, all: { played: 20, win: 14, draw: 3, lose: 3 }, goalsDiff: 28 },
+    { rank: 2, team: { id: 2, name: "Rangers" }, points: 42, all: { played: 20, win: 13, draw: 3, lose: 4 }, goalsDiff: 24 },
+    { rank: 6, team: { id: 3, name: "Motherwell" }, points: 32, all: { played: 20, win: 9, draw: 5, lose: 6 }, goalsDiff: 8 },
+    { rank: 10, team: { id: 4, name: "Ross County" }, points: 18, all: { played: 20, win: 4, draw: 6, lose: 10 }, goalsDiff: -12 }
+  ];
 
-  useEffect(() => {
-    const headers = {
-      "X-RapidAPI-Key": import.meta.env.VITE_API_FOOTBALL_KEY,
-      "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-    };
-
-    const fetchData = async () => {
-      try {
-        const leagueRes = await fetch(
-          "https://api-football-v1.p.rapidapi.com/v3/standings?league=179&season=2024",
-          { headers }
-        );
-        const fixtureRes = await fetch(
-          "https://api-football-v1.p.rapidapi.com/v3/fixtures?team=2566&next=3",
-          { headers }
-        );
-
-        const leagueData = await leagueRes.json();
-        const fixtureData = await fixtureRes.json();
-
-        setLeague(leagueData.response[0].league.standings[0]);
-        setFixtures(fixtureData.response);
-      } catch (err) {
-        console.error("Failed to fetch data:", err);
+  const fixtures = [
+    {
+      fixture: { id: 1, date: "2025-08-01T15:00:00Z" },
+      teams: {
+        home: { name: "Motherwell" },
+        away: { name: "St. Mirren" }
       }
-    };
-
-    fetchData();
-  }, []);
+    },
+    {
+      fixture: { id: 2, date: "2025-08-08T15:00:00Z" },
+      teams: {
+        home: { name: "Hearts" },
+        away: { name: "Motherwell" }
+      }
+    },
+    {
+      fixture: { id: 3, date: "2025-08-15T15:00:00Z" },
+      teams: {
+        home: { name: "Motherwell" },
+        away: { name: "Aberdeen" }
+      }
+    }
+  ];
 
   return (
     <div className="grid gap-6">
       {/* League Table */}
       <section className="bg-white rounded shadow p-4">
         <h2 className="text-xl font-semibold text-[#800000] mb-3">
-          SPFL Premiership Table
+          SPFL Premiership Table (Test Data)
         </h2>
         <table className="w-full text-sm border">
           <thead className="bg-[#800000] text-[#FFB612] uppercase">
@@ -81,7 +77,7 @@ function Dashboard() {
       {/* Fixtures */}
       <section className="bg-white rounded shadow p-4">
         <h2 className="text-xl font-semibold text-[#800000] mb-3">
-          Upcoming Fixtures
+          Upcoming Fixtures (Test Data)
         </h2>
         <ul className="space-y-3">
           {fixtures.map((match) => (
